@@ -18,6 +18,13 @@ async function getWeather(city) {
 
   console.log(data)
 
+  if (data.cod === "404") {
+    weatherResult.innerHTML = `
+      <p>City not found. Try again.</p>
+    `
+    return
+  }
+
   displayWeather(data)
 }
 
