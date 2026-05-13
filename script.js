@@ -39,5 +39,12 @@ function displayWeather(data) {
 searchBtn.addEventListener("click", () => {
   const city = cityInput.value
 
+  if (city === "") {
+    weatherResult.innerHTML = `
+      <p>Please enter a city name.</p>
+    `
+    return
+  }
+
   getWeather(city)
 })
