@@ -8,6 +8,10 @@ async function getWeather(city) {
   const url =
     `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`
 
+  weatherResult.innerHTML = `
+  <p>Loading...</p>
+`
+
   const response = await fetch(url)
 
   const data = await response.json()
