@@ -42,12 +42,16 @@ function displayWeather(data) {
   const iconCode = data.weather[0].icon
   const iconUrl = 
     `https://openweathermap.org/img/wn/${iconCode}@2x.png`
-  weatherResult.innerHTML = `
+weatherResult.innerHTML = `
+  <div class="weather-card">
     <h2>${data.name}</h2>
-    <img src="${iconUrl}" alt="${data.weather[0].description}">
-    <p>Temperature: ${data.main.temp}°F</p>
-    <p>Weather: ${data.weather[0].description}</p>
-  `
+    <img src="${iconUrl}" alt="Weather icon" />
+    <p class="temp">${data.main.temp}°F</p>
+    <p class="description">
+      ${data.weather[0].description}
+    </p>
+  </div>
+`
 }
 
 searchBtn.addEventListener("click", () => {
