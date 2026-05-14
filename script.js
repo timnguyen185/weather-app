@@ -39,8 +39,12 @@ async function getWeather(city) {
 }
 
 function displayWeather(data) {
+  const iconCode = data.weather[0].icon
+  const iconUrl = 
+    `https://openweathermap.org/img/wn/${iconCode}@2x.png`
   weatherResult.innerHTML = `
     <h2>${data.name}</h2>
+    <img src="${iconUrl}" alt="${data.weather[0].description}">
     <p>Temperature: ${data.main.temp}°F</p>
     <p>Weather: ${data.weather[0].description}</p>
   `
