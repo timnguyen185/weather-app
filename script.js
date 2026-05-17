@@ -38,6 +38,20 @@ async function getWeather(city) {
   }
 }
 
+
+async function getForecast(city) {
+  const forecastUrl =
+    `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=imperial`
+
+  const response = await fetch(forecastUrl)
+
+  const data = await response.json()
+
+  console.log(data)
+
+  displayForecast(data)
+}
+
 function displayWeather(data) {
   const iconCode = data.weather[0].icon
   const iconUrl = 
@@ -54,6 +68,42 @@ weatherResult.innerHTML = `
 `
 }
 
+function displayForecast(data) {
+  const forecastContainer =
+    document.getElementById("forecast")
+
+  forecastContainer.innerHTML = ""
+
+  const dailyForecasts = data.list.filter((item, index) => {
+    return index % 8 === 0
+  })
+
+  dailyForecasts.forEach((forecast) => {
+    const date = new Date(forecast.dt_txt)
+
+    const iconCode = forecast.weather[0].icon
+
+    const iconUrl =
+      `https://openweathermap.org/img/wn/${iconCode}@2x.png`
+
+    forecastContainer.innerHTML += `
+      <div class="forecast-card">
+        <h3>
+          ${date.toLocaleDateString("en-US", {
+            weekday: "short"
+          })}
+        </h3>
+
+        <img src="${iconUrl}" alt="Forecast icon" />
+
+        <p>${forecast.main.temp}°F</p>
+
+        <p>${forecast.weather[0].description}</p>
+      </div>
+    `
+  })
+}
+
 searchBtn.addEventListener("click", () => {
   const city = cityInput.value
 
@@ -65,6 +115,7 @@ searchBtn.addEventListener("click", () => {
   }
 
   getWeather(city)
+  getForecast(city)
 })
 
 cityInput.addEventListener("keydown", (event) => {
@@ -79,5 +130,6 @@ cityInput.addEventListener("keydown", (event) => {
     }
 
     getWeather(city)
+    getForecast(city)
   }
 })
